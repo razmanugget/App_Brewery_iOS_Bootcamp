@@ -36,8 +36,16 @@ class ViewController: UIViewController {
   @IBOutlet weak var topButton: UIButton!         // Has TAG = 1
   @IBOutlet weak var bottomButton: UIButton!      // Has TAG = 2
   @IBOutlet weak var storyTextView: UILabel!
+  @IBOutlet weak var restartButtonOutlet: UIButton!
   
   // TODO Step 5: Initialise instance variables here
+  @IBAction func restartPressed(_ sender: Any) {
+    storyIndex = 0
+    topButton.isHidden = false
+    bottomButton.isHidden = false
+    restartButtonOutlet.isHidden = true
+    updateUI(buttonPress: 0)
+  }
   
   
   // User presses one of the buttons
@@ -48,13 +56,13 @@ class ViewController: UIViewController {
   func updateUI(buttonPress: Int) {
     let storyCase = (storyIndex, buttonPress)
     switch storyCase {
-    case (0, 1):
+    case (0, 1), (3, 1):
       storyIndex = 6
       storyTextView.text = storyArray[storyIndex]
       topButton.setTitle(storyArray[storyIndex+1], for: .normal)
       bottomButton.setTitle(storyArray[storyIndex+2], for: .normal)
     case (0, 2):
-       storyIndex = 3
+      storyIndex = 3
       storyTextView.text = storyArray[storyIndex]
       topButton.setTitle(storyArray[storyIndex+1], for: .normal)
       bottomButton.setTitle(storyArray[storyIndex+2], for: .normal)
@@ -62,19 +70,17 @@ class ViewController: UIViewController {
       storyTextView.text = storyArray[11]
       topButton.isHidden = true
       bottomButton.isHidden = true
+      restartButtonOutlet.isHidden = false
     case (6, 2):
       storyTextView.text = storyArray[10]
       topButton.isHidden = true
       bottomButton.isHidden = true
-    case (3, 1):
-      storyIndex = 6
-      storyTextView.text = storyArray[storyIndex]
-      topButton.setTitle(storyArray[storyIndex+1], for: .normal)
-      bottomButton.setTitle(storyArray[storyIndex+2], for: .normal)
+      restartButtonOutlet.isHidden = false
     case (3, 2):
       storyTextView.text = storyArray[9]
       topButton.isHidden = true
       bottomButton.isHidden = true
+      restartButtonOutlet.isHidden = false
     default:
       storyTextView.text = storyArray[storyIndex]
       topButton.setTitle(storyArray[storyIndex+1], for: .normal)
@@ -84,6 +90,7 @@ class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    restartButtonOutlet.isHidden = true
     updateUI(buttonPress: 0)
   }
 }
